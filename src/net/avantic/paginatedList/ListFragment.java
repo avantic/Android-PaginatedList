@@ -21,7 +21,7 @@ import android.widget.Toast;
 public class ListFragment extends Fragment implements OnItemClickListener {
 	public static final String ARG_PAGE = "net.avantic.paginatedList.ARG_PAGE";
 	public static final int HEIGHT_ITEM_DP = 70;
-	public static final int HEIGHT_SCREEN_OCCUPATED_DP = 60;
+	public static final int HEIGHT_SCREEN_OCCUPATED_DP = 40;
 
 	private int pageNumber;
 
