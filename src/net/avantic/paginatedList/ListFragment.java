@@ -1,7 +1,5 @@
 package net.avantic.paginatedList;
 
-import java.util.List;
-
 import net.avantic.paginatedList.adapter.ListAdapter;
 import net.avantic.paginatedList.dao.ItemDAO;
 import net.avantic.paginatedList.model.Item;
@@ -60,7 +58,7 @@ public class ListFragment extends Fragment implements OnItemClickListener {
 	}
 
 	public static int getTotalPages(DisplayMetrics displayMetrics) {
-		return ((Double) Math.ceil((double) ItemDAO.TOTAL_ITEMS	/ (double) getItemsByPage(displayMetrics))).intValue();
+		return ((Double) Math.ceil((double) ItemDAO.countItems() / (double) getItemsByPage(displayMetrics))).intValue();
 	}
 
 	private static int getItemsByPage(DisplayMetrics displayMetrics) {
@@ -91,15 +89,14 @@ public class ListFragment extends Fragment implements OnItemClickListener {
 
 		int itemsByPage = getItemsByPage(displayMetrics);
 		int initialItem = currentPage * itemsByPage;
-		int lastItem = initialItem + itemsByPage - 1;
-		List<Item> items = ItemDAO.getItems();
-		if (lastItem >= items.size())
-			lastItem = items.size() - 1;
+		int lastItem = initialItem + itemsByPage;
+		if (lastItem >= ItemDAO.countItems())
+			lastItem = ItemDAO.countItems();
 
 		listAdapter.clear();
-		for (int i = initialItem; i <= lastItem; i++)
-			listAdapter.add(items.get(i));
-
+		for (Item item : ItemDAO.getItems(initialItem, lastItem))
+			listAdapter.add(item);
+		
 		listAdapter.notifyDataSetChanged();
 	}
 

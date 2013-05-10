@@ -8,19 +8,23 @@ import net.avantic.paginatedList.model.Item;
 import android.graphics.Color;
 
 public class ItemDAO {
-	public static final int TOTAL_ITEMS = 24;
+	private static final int TOTAL_ITEMS = 24;
 	
 	
 	private static List<Item> items;
 
-	public static List<Item> getItems() {
+	public static List<Item> getItems(int initialItem, int lastItem) {
 		if (items == null) {
 			items = new ArrayList<Item>();
 			for (int i = 0; i < TOTAL_ITEMS; i++)
 				items.add(newRandomItem(i));
 		}
 		
-		return items;
+		return items.subList(initialItem, lastItem);
+	}
+	
+	public static int countItems() {
+		return TOTAL_ITEMS;
 	}
 
 	private static Item newRandomItem(int i) {
